@@ -1,9 +1,11 @@
 package com.example.uitesting
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.activity_sign_up.btnActivitySignup
@@ -13,7 +15,7 @@ import java.util.*
 class SignUpActivity : AppCompatActivity() {
     private var cal: Calendar = Calendar.getInstance()
     private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
-
+    private lateinit var tvSignUpSuccessfully:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +23,7 @@ class SignUpActivity : AppCompatActivity() {
         init()
         setListener()
     }
+    @SuppressLint("SetTextI18n")
     private fun setListener() {
         val dateSetListener =
             DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
@@ -42,10 +45,10 @@ class SignUpActivity : AppCompatActivity() {
             ).show()
         }
         btnActivitySignup.setOnClickListener {
-            if (tetFullName.text.toString().trim().isEmpty()) {
-                tetFullName.error = getString(R.string.error_full_name)
+            if (tetFullName.text.toString()=="") {
+                tetFullName.error =getString(R.string.error_full_name)
                 tetFullName.requestFocus()
-            } else if (tetPhoneNumber.text.toString().trim().isEmpty()) {
+            }else if (tetPhoneNumber.text.toString().trim().isEmpty()) {
                 tetPhoneNumber.error = getString(R.string.error_phone_number_is_empty)
                 tetPhoneNumber.requestFocus()
             } else if (tetPhoneNumber.text.toString().length != 10) {
@@ -61,11 +64,9 @@ class SignUpActivity : AppCompatActivity() {
             } else if (tetAddress.text.toString().trim().isEmpty()) {
                 tetAddress.error = getString(R.string.error_address)
                 tetAddress.requestFocus()
-            } else if (tetBirthDate.text.toString().trim().isEmpty()) {
-                tetBirthDate.error = getString(R.string.error_birth_is_empty)
-                tetBirthDate.requestFocus()
-            } else {
-                Toast.makeText(this,"Sign Up successfully",Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(this,"Sign up Successfully",Toast.LENGTH_SHORT).show()
+                tvSignUpSuccessfully.text = "Sign up Successfully"
             }
         }
     }
@@ -75,6 +76,7 @@ class SignUpActivity : AppCompatActivity() {
         val dataOfSpinner=resources.getStringArray(R.array.country)
         val adapterSpinnerCountry=ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,dataOfSpinner)
          spCountry.adapter=adapterSpinnerCountry
+
     }
 
  }

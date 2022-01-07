@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private fun setListener(){
         btnSignup.setOnClickListener {
               val signUp=Intent(this,SignUpActivity::class.java)
+              signUp.putExtra("Activity Name","SignUp Activity")
               startActivity(signUp)
 
 
